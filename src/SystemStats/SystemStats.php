@@ -3,7 +3,7 @@
 use RuntimeException;
 use SystemStats\Linux\Memory;
 
-class SystemStats
+class SystemStats implements MemoryInterface
 {
     /**
      * @var array
