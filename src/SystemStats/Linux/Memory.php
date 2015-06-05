@@ -3,9 +3,15 @@
 namespace SystemStats\Linux;
 
 use SystemStats\MemoryInterface;
+use SystemStats\FileReader;
 
 class Memory implements MemoryInterface
 {
+    /**
+     * @var FileReader
+     */
+    private $fileReader;
+
     /**
      * @var array
      */
@@ -17,10 +23,11 @@ class Memory implements MemoryInterface
     private $vmstat = [];
 
     /**
-     *
+     * @param $fileReader
      */
-    public function __construct()
+    public function __construct(FileReader $fileReader)
     {
+        $this->fileReader = $fileReader;
         $this->meminfo = $this->readMeminfo();
         $this->vmstat = $this->readVmstat();
     }
@@ -43,6 +50,9 @@ class Memory implements MemoryInterface
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getSwapMemory()
     {
         $total = $this->meminfo['SwapTotal'];
@@ -81,7 +91,7 @@ class Memory implements MemoryInterface
      */
     private function readMeminfo()
     {
-        return $this->read('/proc/meminfo', ':', function ($value) {
+        return $this->fileReader->read('/proc/meminfo', ':', function ($value) {
             return ((int) trim(rtrim($value, 'kB'))) * 1024;
         });
     }
@@ -91,29 +101,9 @@ class Memory implements MemoryInterface
      */
     private function readVmstat()
     {
-        return $this->read('/proc/vmstat', ' ', function ($value) {
+        return $this->fileReader->read('/proc/vmstat', ' ', function ($value) {
             // values are expressed in 4 kilo bytes, we want bytes instead
             return ((int) trim($value)) * 4 * 1024;
         });
-    }
-
-    /**
-     * @param $file
-     * @param $delimiter
-     * @param callable $valueFormatter
-     *
-     * @return array
-     */
-    private function read($file, $delimiter, callable $valueFormatter)
-    {
-        $data = [];
-
-        foreach (explode(PHP_EOL, trim(file_get_contents($file))) as $item) {
-            list($key, $value) = explode($delimiter, $item);
-
-            $data[trim($key)] = $valueFormatter($value);
-        }
-
-        return $data;
     }
 }

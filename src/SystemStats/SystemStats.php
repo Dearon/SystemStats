@@ -4,6 +4,7 @@ namespace SystemStats;
 
 use RuntimeException;
 use SystemStats\Linux\Memory;
+use SystemStats\FileReader;
 
 class SystemStats
 {
@@ -28,13 +29,15 @@ class SystemStats
      */
     public function __construct($os = PHP_OS)
     {
+        $fileReader = new FileReader;
+
         if (!in_array($os, array_keys($this->mapper))) {
             throw new RuntimeException('OS ('.$os.') Not Implemented.');
         }
 
         $os = $this->mapper[$os];
 
-        $this->memory = new $os['memory']();
+        $this->memory = new $os['memory']($fileReader);
     }
 
     /**

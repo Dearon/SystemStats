@@ -3,9 +3,16 @@
 namespace spec\SystemStats\Linux;
 
 use PhpSpec\ObjectBehavior;
+use SystemStats\FileReader;
 
 class MemorySpec extends ObjectBehavior
 {
+    function let()
+    {
+        $fileReader = new FileReader;
+        $this->beConstructedWith($fileReader);
+    }
+
     public function it_is_initializable()
     {
         $this->shouldHaveType('SystemStats\Linux\Memory');
