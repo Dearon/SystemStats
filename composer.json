@@ -12,6 +12,12 @@
             "email": "dearon@gmail.com",
             "homepage": "http://www.dearon.com/",
             "role": "Developer"
+        },
+        {
+            "name": "Robin Malfait",
+            "email": "malfait.robin@gmail.com",
+            "homepage": "http://robinmalfait.com/",
+            "role": "Developer"
         }
     ],
     "require": {
