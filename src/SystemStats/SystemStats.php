@@ -62,7 +62,7 @@ class SystemStats
     }
 
     /**
-     * @return mixed
+     * @return int seconds
      */
     public function getUptime()
     {
@@ -70,7 +70,7 @@ class SystemStats
     }
 
     /**
-     * @return mixed
+     * @return int seconds
      */
     public function getIdletime()
     {
