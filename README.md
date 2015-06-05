@@ -19,6 +19,7 @@ If you discover any security related issues, please email dearon@gmail.com inste
 ## Credits
 
 - [Remco Meeuwissen](https://github.com/dearon)
+- [Robin Malfait](https://github.com/RobinMalfait)
 - [All Contributors](../../contributors)
 
 ## License
