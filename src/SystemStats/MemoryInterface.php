@@ -1,4 +1,6 @@
-<?php namespace SystemStats;
+<?php
+
+namespace SystemStats;
 
 interface MemoryInterface
 {

@@ -1,4 +1,6 @@
-<?php namespace SystemStats;
+<?php
+
+namespace SystemStats;
 
 use RuntimeException;
 use SystemStats\Linux\Memory;
@@ -10,7 +12,7 @@ class SystemStats implements MemoryInterface
      */
     private $mapper = [
         'Linux' => [
-            'memory' => Memory::class
+            'memory' => Memory::class,
         ],
     ];
 
@@ -21,17 +23,18 @@ class SystemStats implements MemoryInterface
 
     /**
      * @param string $os
+     *
      * @throws RuntimeException
      */
     public function __construct($os = PHP_OS)
     {
-        if (! in_array($os, array_keys($this->mapper))) {
-            throw new RuntimeException("OS (" . $os . ") Not Implemented.");
+        if (!in_array($os, array_keys($this->mapper))) {
+            throw new RuntimeException('OS ('.$os.') Not Implemented.');
         }
 
         $os = $this->mapper[$os];
 
-        $this->memory = new $os["memory"];
+        $this->memory = new $os['memory']();
     }
 
     /**
