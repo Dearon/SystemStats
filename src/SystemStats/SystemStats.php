@@ -1,6 +1,6 @@
 <?php
 
-namespace Dearon;
+namespace SystemStats;
 
 class SystemStats
 {
