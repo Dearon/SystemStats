@@ -1,5 +1,5 @@
 {
-    "name": "dearon/SystemStats",
+    "name": "SystemStats/SystemStats",
     "description": "A package for getting system information like cpu and memory usage",
     "keywords": [
         "sysinfo"
