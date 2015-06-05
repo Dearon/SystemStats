@@ -1,15 +1,12 @@
-<?php
-
-namespace SystemStats;
+<?php namespace SystemStats;
 
 class FileReader
 {
     /**
-     * @param $file
+     * @param $filename
      * @param $delimiter
      * @param callable $valueFormatter
-     *
-     * @return array
+     * @return mixed
      */
     public function read($filename, $delimiter, callable $valueFormatter)
     {
@@ -31,6 +28,6 @@ class FileReader
             list($key, $value) = explode($delimiter, $item);
             $carry[trim($key)] = $valueFormatter($value);
             return $carry;
-        }, array());
+        }, []);
     }
 }

@@ -1,10 +1,8 @@
-<?php
-
-namespace SystemStats;
+<?php namespace SystemStats;
 
 use RuntimeException;
 use SystemStats\Linux\Memory;
-use SystemStats\FileReader;
+use SystemStats\Linux\Uptime;
 
 class SystemStats
 {
@@ -14,13 +12,19 @@ class SystemStats
     private $mapper = [
         'Linux' => [
             'memory' => Memory::class,
+            'uptime' => Uptime::class,
         ],
     ];
 
     /**
-     * @var MemoryUsageInterface
+     * @var
      */
     private $memory;
+
+    /**
+     * @var
+     */
+    private $uptime;
 
     /**
      * @param string $os
@@ -31,13 +35,14 @@ class SystemStats
     {
         $fileReader = new FileReader;
 
-        if (!in_array($os, array_keys($this->mapper))) {
-            throw new RuntimeException('OS ('.$os.') Not Implemented.');
+        if (! in_array($os, array_keys($this->mapper))) {
+            throw new RuntimeException('OS (' . $os . ') Not Implemented.');
         }
 
         $os = $this->mapper[$os];
 
         $this->memory = new $os['memory']($fileReader);
+        $this->uptime = new $os['uptime']($fileReader);
     }
 
     /**
@@ -54,5 +59,21 @@ class SystemStats
     public function getSwapMemory()
     {
         return $this->memory->getSwapMemory();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUptime()
+    {
+        return $this->uptime->getUptime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdletime()
+    {
+        return $this->uptime->getIdletime();
     }
 }

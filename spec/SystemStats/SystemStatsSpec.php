@@ -1,6 +1,4 @@
-<?php
-
-namespace spec\SystemStats;
+<?php namespace spec\SystemStats;
 
 use PhpSpec\ObjectBehavior;
 

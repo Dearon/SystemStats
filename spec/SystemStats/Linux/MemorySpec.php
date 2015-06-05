@@ -1,13 +1,11 @@
-<?php
-
-namespace spec\SystemStats\Linux;
+<?php namespace spec\SystemStats\Linux;
 
 use PhpSpec\ObjectBehavior;
 use SystemStats\FileReader;
 
 class MemorySpec extends ObjectBehavior
 {
-    function let()
+    public function let()
     {
         $fileReader = new FileReader;
         $this->beConstructedWith($fileReader);

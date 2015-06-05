@@ -1,6 +1,4 @@
-<?php
-
-namespace SystemStats\Linux;
+<?php namespace SystemStats\Linux;
 
 use SystemStats\MemoryInterface;
 use SystemStats\FileReader;
