@@ -1,6 +1,6 @@
 <?php namespace SystemStats;
 
-interface MemoryUsage
+interface MemoryInterface
 {
     /**
      * @return array

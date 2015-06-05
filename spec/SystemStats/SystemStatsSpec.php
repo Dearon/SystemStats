@@ -9,4 +9,9 @@ class SystemStatsSpec extends ObjectBehavior
     {
         $this->shouldHaveType('SystemStats\SystemStats');
     }
+
+    public function it_should_not_accept_a_os_without_implementation()
+    {
+        $this->shouldThrow(new \RuntimeException("OS (BSD) Not Implemented."))->during('__construct', array('BSD'));
+    }
 }

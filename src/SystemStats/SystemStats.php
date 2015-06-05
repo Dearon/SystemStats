@@ -1,8 +1,9 @@
 <?php namespace SystemStats;
 
+use RuntimeException;
 use SystemStats\Linux\Memory;
 
-class SystemStats implements MemoryUsage
+class SystemStats
 {
     /**
      * @var array

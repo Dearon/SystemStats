@@ -1,8 +1,8 @@
 <?php namespace SystemStats\Linux;
 
-use SystemStats\MemoryUsage;
+use SystemStats\MemoryInterface;
 
-class Memory implements MemoryUsage
+class Memory implements MemoryInterface
 {
     /**
      * @var array
