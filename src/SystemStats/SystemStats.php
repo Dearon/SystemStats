@@ -5,7 +5,7 @@ namespace SystemStats;
 use RuntimeException;
 use SystemStats\Linux\Memory;
 
-class SystemStats implements MemoryInterface
+class SystemStats
 {
     /**
      * @var array
