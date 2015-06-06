@@ -42,7 +42,7 @@ class FileParser implements FileParserInterface
             }
 
             if (isset($this->files[$filename]['delimited_with_key'])) {
-                $file = $this->delimited_with_key($file, $this->files[$filename]['delimited_with_key']);
+                $file = $this->delimitedWithKey($file, $this->files[$filename]['delimited_with_key']);
             }
 
             if (isset($this->files[$filename]['format'])) {
@@ -73,7 +73,7 @@ class FileParser implements FileParserInterface
      *
      * @return array
      */
-    private function delimited_with_key($file, $delimiter)
+    private function delimitedWithKey($file, $delimiter)
     {
         return array_reduce(explode(PHP_EOL, $file), function ($carry, $item) use ($delimiter) {
             list($key, $value) = explode($delimiter, $item);
@@ -90,18 +90,18 @@ class FileParser implements FileParserInterface
      */
     private function format($file, $options)
     {
-        foreach($file as $key => &$value) {
+        foreach ($file as $key => &$value) {
             if (isset($options['*'])) {
                 $option = explode('|', $options['*']);
-            } else if (isset($options[$key])) {
+            } elseif (isset($options[$key])) {
                 $option = explode('|', $options[$key]);
             } else {
                 $option = [];
             }
 
-            foreach($option as $op) {
+            foreach ($option as $op) {
                 switch($op) {
-                    case 'trim': 
+                    case 'trim':
                         $value = trim($value);
                         break;
                     case 'number':
