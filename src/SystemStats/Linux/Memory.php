@@ -36,13 +36,12 @@ class Memory implements MemoryInterface
     public function getVirtualMemory()
     {
         $total = $this->meminfo['MemTotal'];
-        $free = $this->meminfo['MemFree'];
         $available = $this->meminfo['MemFree'] + $this->meminfo['Buffers'] + $this->meminfo['Cached'];
 
         return [
             'total' => $total,
             'available' => $available,
-            'used' => $total - $free,
+            'used' => $total - $available,
             'percent_used' => $this->calculatePercentage($total - $available, $total),
             'percent_available' => $this->calculatePercentage($available, $total),
         ];
