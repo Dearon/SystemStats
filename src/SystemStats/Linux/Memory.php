@@ -26,8 +26,8 @@ class Memory implements MemoryInterface
     public function __construct(FileReader $fileReader)
     {
         $this->fileReader = $fileReader;
-        $this->meminfo = $this->readMeminfo();
-        $this->vmstat = $this->readVmstat();
+        $this->meminfo = $this->fileReader->read('/proc/meminfo');
+        $this->vmstat = $this->fileReader->read('/proc/vmstat');
     }
 
     /**
@@ -82,26 +82,5 @@ class Memory implements MemoryInterface
         }
 
         return (float) number_format($amount / $total * 100, $round);
-    }
-
-    /**
-     * @return array
-     */
-    private function readMeminfo()
-    {
-        return $this->fileReader->read('/proc/meminfo', ':', function ($value) {
-            return ((int) trim(rtrim($value, 'kB'))) * 1024;
-        });
-    }
-
-    /**
-     * @return array
-     */
-    private function readVmstat()
-    {
-        return $this->fileReader->read('/proc/vmstat', ' ', function ($value) {
-            // values are expressed in 4 kilo bytes, we want bytes instead
-            return ((int) trim($value)) * 4 * 1024;
-        });
     }
 }

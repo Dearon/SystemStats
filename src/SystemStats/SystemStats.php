@@ -1,8 +1,6 @@
 <?php namespace SystemStats;
 
 use RuntimeException;
-use SystemStats\Linux\Memory;
-use SystemStats\Linux\Uptime;
 
 class SystemStats
 {
@@ -11,8 +9,9 @@ class SystemStats
      */
     private $mapper = [
         'Linux' => [
-            'memory' => Memory::class,
-            'uptime' => Uptime::class,
+            'fileParser' => \SystemStats\Linux\FileParser::class,
+            'memory' => \SystemStats\Linux\Memory::class,
+            'uptime' => \SystemStats\Linux\Uptime::class,
         ],
     ];
 
@@ -33,13 +32,14 @@ class SystemStats
      */
     public function __construct($os = PHP_OS)
     {
-        $fileReader = new FileReader;
-
         if (! in_array($os, array_keys($this->mapper))) {
             throw new RuntimeException('OS (' . $os . ') Not Implemented.');
         }
 
         $os = $this->mapper[$os];
+
+        $fileParser = new $os['fileParser'];
+        $fileReader = new FileReader($fileParser);
 
         $this->memory = new $os['memory']($fileReader);
         $this->uptime = new $os['uptime']($fileReader);

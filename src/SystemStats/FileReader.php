@@ -1,14 +1,29 @@
 <?php namespace SystemStats;
 
+use SystemStats\FileParserInterface;
+
 class FileReader
 {
+    /*
+     * @var object
+     */
+    private $fileParser;
+
+    /**
+     * @param FileParser $fileParser
+     */
+    public function __construct(FileParserInterface $fileParser)
+    {
+        $this->fileParser = $fileParser;
+    }
+
     /**
      * @param $filename
      * @param $delimiter
      * @param callable $valueFormatter
      * @return mixed
      */
-    public function read($filename, $delimiter, callable $valueFormatter)
+    public function read($filename)
     {
         if (empty($filename)) {
             throw new \InvalidArgumentException('Filename needed');
@@ -18,16 +33,7 @@ class FileReader
             throw new \InvalidArgumentException('File does not exist');
         }
 
-        if (empty($delimiter)) {
-            throw new \InvalidArgumentException('Delimiter needed');
-        }
-
-        $file = file_get_contents($filename);
-
-        return array_reduce(explode(PHP_EOL, trim($file)), function ($carry, $item) use ($delimiter, $valueFormatter) {
-            list($key, $value) = explode($delimiter, $item);
-            $carry[trim($key)] = $valueFormatter($value);
-            return $carry;
-        }, []);
+        $file = trim(file_get_contents($filename));
+        return $this->fileParser->parse($filename, $file);
     }
 }

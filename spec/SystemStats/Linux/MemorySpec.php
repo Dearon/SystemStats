@@ -2,12 +2,14 @@
 
 use PhpSpec\ObjectBehavior;
 use SystemStats\FileReader;
+use SystemStats\Linux\FileParser;
 
 class MemorySpec extends ObjectBehavior
 {
     public function let()
     {
-        $fileReader = new FileReader;
+        $fileParser = new FileParser;
+        $fileReader = new FileReader($fileParser);
         $this->beConstructedWith($fileReader);
     }
 
