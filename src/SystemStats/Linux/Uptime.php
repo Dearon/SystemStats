@@ -26,7 +26,7 @@ class Uptime implements UptimeInterface
     public function __construct(FileReader $fileReader)
     {
         $this->fileReader = $fileReader;
-        $this->uptime = $this->fileReader->read('/proc/uptime');
+        list($this->uptime, $this->idletime) = $this->fileReader->read('/proc/uptime');
     }
 
     /**
@@ -34,7 +34,7 @@ class Uptime implements UptimeInterface
      */
     public function getUptime()
     {
-        return $this->uptime[0];
+        return (double) $this->uptime;
     }
 
     /**
@@ -42,6 +42,6 @@ class Uptime implements UptimeInterface
      */
     public function getIdletime()
     {
-        return $this->uptime[1];
+        return (double) $this->idletime;
     }
 }

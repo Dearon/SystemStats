@@ -1,6 +1,7 @@
 <?php namespace spec\SystemStats\Linux;
 
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use SystemStats\FileReader;
 use SystemStats\Linux\FileParser;
 
