@@ -76,6 +76,8 @@ class FileParser implements FileParserInterface
     private function delimitedWithKey($file, $delimiter)
     {
         return array_reduce(explode(PHP_EOL, $file), function ($carry, $item) use ($delimiter) {
+            if (empty($item) or ! strpos($item, $delimiter)) return $carry;
+
             list($key, $value) = explode($delimiter, $item);
             $carry[trim($key)] = trim($value);
             return $carry;

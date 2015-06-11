@@ -30,4 +30,9 @@ class FileReaderSpec extends ObjectBehavior
             return $value;
         }));
     }
+
+    public function it_can_read_a_file()
+    {
+        $this->read(__FILE__)->shouldStartWith('<?php');
+    }
 }
